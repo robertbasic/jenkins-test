@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="jenkins-test" default="build" basedir=".">
- <property name="source" value="src"/>
+ <property name="source" value="${basedir}/src"/>
 
  <target name="clean"
          description="Clean up and create artifact directories">
@@ -30,7 +30,6 @@
   <parallel threadCount="2">
    <sequential>
     <antcall target="pdepend"/>
-    <antcall target="phpmd"/>
    </sequential>
    <antcall target="phpcpd"/>
    <antcall target="phpcs"/>
@@ -46,17 +45,6 @@
    <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
    <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
    <arg path="${source}" />
-  </exec>
- </target>
-
- <target name="phpmd"
-         description="Generate pmd.xml using PHPMD">
-  <exec executable="phpmd">
-   <arg path="${source}" />
-   <arg value="xml" />
-   <arg value="${basedir}/build/phpmd.xml" />
-   <arg value="--reportfile" />
-   <arg value="${basedir}/build/logs/pmd.xml" />
   </exec>
  </target>
 
