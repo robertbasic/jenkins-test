@@ -30,6 +30,7 @@
   <parallel threadCount="2">
    <sequential>
     <antcall target="pdepend"/>
+    <antcall target="phpmd"/>
    </sequential>
    <antcall target="phpcpd"/>
    <antcall target="phpcs"/>
@@ -45,6 +46,17 @@
    <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
    <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
    <arg path="${source}" />
+  </exec>
+ </target>
+
+ <target name="phpmd"
+         description="Generate pmd.xml using PHPMD">
+  <exec executable="phpmd">
+   <arg path="${source}" />
+   <arg value="xml" />
+   <arg value="codesize,unusedcode,naming,design" />
+   <arg value="--reportfile" />
+   <arg value="${basedir}/build/logs/pmd.xml" />
   </exec>
  </target>
 
